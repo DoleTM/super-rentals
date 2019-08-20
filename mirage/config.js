@@ -1,5 +1,6 @@
 export default function () {
   this.namespace = '/api';
+  this.passthrough('https://api.mapbox.com/**');
 
   let rentals = [{
     type: 'rentals',
@@ -48,6 +49,11 @@ export default function () {
     } else {
       return { data: rentals };
     }
+  });
+
+  // Find and return the provided rental from our rental list above
+  this.get('/rentals/:id', function(db, request) {
+    return { data: rentals.find((rental) => request.params.id === rental.id) };
   });
 }
   // These comments are here to help you get started. Feel free to delete them.

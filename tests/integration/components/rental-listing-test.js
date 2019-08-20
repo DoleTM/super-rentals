@@ -1,22 +1,31 @@
+import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import setupMirage from 'ember-cli-mirage/test-supprt/setup-mirage';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import EmberObject from '@ember/object';
+
+let StubMapsService = Service.extend({
+  getMapElement() {
+    return Promise.resolve(document.createElement('div'));
+  }
+});
 
 module('Integration | Component | rental-listing', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(function() {
-    this.rental = {
+    this.owner.register('service:map-element', StubMapsService);
+    this.rental = EmberObject.create({
       image: 'fake.png',
       title: 'test-title',
       owner: 'test-owner',
       type: 'test-type',
       city: 'test-city',
       bedrooms: 3
-    };
+    });
   });
 
   test('should display rental details', async function(assert) {

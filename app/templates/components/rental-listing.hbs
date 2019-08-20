@@ -1,14 +1,14 @@
 <article class="listing">
-    <a
+  <a
     onclick={{action "toggleImageSize"}}
     class="image {{if this.isWide "wide"}}"
     role="button"
   >
-  <img src={{this.rental.image}} alt="">
-  <small>View Larger</small>
+    <img src={{this.rental.image}} alt="">
+    <small>View Larger</small>
   </a>
   <div class="details">
-    <h3>{{this.rental.title}}</h3>
+    <h3>{{#link-to "rentals.show" rental class=rental.id}}{{this.rental.title}}{{/link-to}}</h3>
     <div class="detail owner">
       <span>Owner:</span> {{this.rental.owner}}
     </div>
@@ -22,4 +22,5 @@
       <span>Number of bedrooms:</span> {{this.rental.bedrooms}}
     </div>
   </div>
+  <LocationMap @location={{this.rental.city}} />
 </article>
